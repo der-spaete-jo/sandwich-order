@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title> Brötchen Bestellung </title>
+	<script src="https://unpkg.com/vue"></script>	
+	<style src="assets/style/order_table.css"></style>
+
+</head>
+
+<body>
+
+	<h1> Brötchen Bestellung </h1>
+	<div id="sandwich-chooser">
+
+	<!-- Brötchen Übersicht -->
+		<h3> Diese Brötchen stehen zur Auswahl </h3>
+		<table>
+			<tr v-for="s in sandwich">
+				<td>{{ s.name }}</td> <td>- {{ s.description }}</td>
+			</tr>
+		</table>
+
+	<!-- Brötchen Auswahl -->
+		<h3> Deine Auswahl </h3>
+		<table>
+			<tr>
+				<td> Name: </td> <td> <input v-model="employee_name"> </td>
+			</tr>
+		</table>
+		<table>
+			<thead>
+				<tr>
+					<th>Brötchen</th>
+					<th>Verringern</th>
+					<th>Anzahl</th>
+					<th>Erhöhen</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="s in sandwich">
+					<td> {{ s.name }} </td> 
+					<td> <button v-on:click="s.number -= 1" v-if="s.number >= 1">-</button> </td> 
+					<td> <input v-model.number="s.number"> </td> 
+					<td> <button v-on:click="s.number += 1">+</button> </td>
+				</tr>
+			</tbody>
+		</table>
+		<table>
+			<tr>
+				<td> <button v-on:click="onSendOrder()"> Absenden </button> </td>
+				<td> <button v-on:click="onEraseOrder()"> Löschen </button> </td>
+			</tr>
+		</table>
+		
+
+	<!-- In dieser Tabelle werden die Bestellungen angezeigt -->
+		<h3> Bestellungen </h3> 
+		<table>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th v-for="s in sandwich"> {{ s.name }} </th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="c in chosen">
+					<td v-for="prop in c"> {{ prop }} </td>
+				</tr>
+				<tr>
+					<td> Summe </td>
+					<td> {{  sandwich_1_total }} </td>
+				</tr>
+			</tbody>
+		</table>
+		<br />
+		<table>
+			<tr>
+				<td> <button v-on:click="onPrint()"> Drucken </button> </td>
+				<td> <button v-on:click="onDownload()"> Herunterladen </button> </td>
+			</tr>
+			<tr>
+				<td> <button v-on:click="onWipeOrders()"> Alle Bestellungen Löschen </button> </td>
+			</tr>
+		</table>
+		
+
+	</div>
+	<script src="assets/script/sandwich_chooser.js"></script>
+
+</body>
+
+</html>
